@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "trabajo backend ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nicolas daniel corredor esquivel",
+  "license": "ISC",
+  "dependencies": {
+    "backend": "^0.0.0",
+    "express": "^4.18.2"
+  }
+}
