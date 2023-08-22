@@ -1,7 +1,7 @@
 const ProductManager = require('./ProductManager');
 
 
-const productManager = new ProductManager('../src/json/productos.json');
+const productManager = new ProductManager('../src/Json/productos.json');
 
 productManager.iniciar()
   .then(() => {
