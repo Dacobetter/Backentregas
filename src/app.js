@@ -1,40 +1,18 @@
 const express = require('express');
-const ProductManager = require('./ProductManager');
-
+const products = require('./Js/products')
+const carts = require('./Js/carts')
 const app = express();
 
-const productManager = new ProductManager('../src/productos.json');
+app.use(express.json());
 
-app.get('/products', async (req, res) => {
-  try {
-    const products = await productManager.getProductos();
-    const limit = req.query.limit;
-    
-    if (typeof products === 'string') {
-      const error = products.split(' ');
-      return res.status(parseInt(error[0].slice(1, 4))).json({ error: error.slice(1).join(' ') });
-    }
-    
-    res.status(200).json({ playload: products.slice(0, limit) });
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
-app.get('/products/:id', async (req, res) => {
-  try {
-    const productId = parseInt(req.params.id);
-    const product = await productManager.getProductoById(productId);
+app.get('/api/products', products.getAllProducts);
+app.get('/api/products/:pid', products.getProductById);
+app.post('/api/products', products.addProduct);
+app.put('/api/products/:pid', products.updateProduct);
+app.delete('/api/products/:pid', products.deleteProduct);
 
-    if (typeof product === 'string') {
-      const error = product.split(' ');
-      return res.status(parseInt(error[0].slice(1, 4))).json({ error: error.slice(1).join(' ') });
-    } else {
-      res.status(200).json({ playload: product });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
+app.post('/api/carts', carts.postCart);
+app.get('/api/carts/:cid', carts.getCart);
+app.post('/api/carts/:cid/product/:pid', carts.addProductToCart);
 app.listen(8080, () => console.log('Servidor activo en el puerto 8080'));
