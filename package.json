@@ -2,14 +2,18 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "trabajo backend ",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "node",
+    "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "nicolas daniel corredor esquivel",
   "license": "ISC",
   "dependencies": {
     "backend": "^0.0.0",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "socket.io": "^4.7.2"
   }
 }
