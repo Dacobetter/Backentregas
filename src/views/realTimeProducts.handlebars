@@ -1,0 +1,35 @@
+<h1>Edite</h1>
+<form id="formulario"> 
+ <div>Titulo <input type="text" name="" id="title"></div>
+ <div>Descripccion<input type="text" name="" id="description"></div>
+ <div>Precio<input type="number" name="" id="price"></div>
+ <div>Codigo<input type="text" name="" id="code"></div>
+ <div>Stock<input type="number" name="" id="stock"></div>
+</form>
+<button id="createBtn">Crear Nuevo Producto</button>
+<table id="realProductsTable">
+<thead>
+    <tr>
+        <td>Producto</td>
+        <td>Descripccion</td>
+        <td>Precio</td>
+        <td>Codigo</td>
+        <td>Stock</td>
+    </tr>
+</thead>
+<tbody>
+    {{#each products}}
+    <tr>
+        <td><button class="" onclick="deleteProduct({{this.id}})">Eliminar</button></td>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.code}}</td>
+        <td>{{this.stock}}</td>
+    </tr>
+    {{/each}}
+</tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/index.js"></script>

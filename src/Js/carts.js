@@ -2,8 +2,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const cartsFilePath = path.join(__dirname,'..',  '..', 'src', 'Json', 'carts.json');
-const productsFilePath = path.join(__dirname,'..',  '..', 'src', 'Json', 'productos.json');
+const cartsFilePath = path.join(__dirname,'..',  '..', 'src', 'json', 'carts.json');
+const productsFilePath = path.join(__dirname,'..',  '..', 'src', 'json', 'productos.json');
 
 let carts = [];
 let products = [];

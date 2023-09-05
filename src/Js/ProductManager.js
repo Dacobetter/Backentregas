@@ -102,3 +102,9 @@ async getProductos() {
     }
 }
 module.exports = ProductManager;
+
+
+    
+
+
+ 

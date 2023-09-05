@@ -1,7 +1,8 @@
+
 const ProductManager = require('./ProductManager');
 
 
-const productManager = new ProductManager('../src/Json/productos.json');
+const productManager = new ProductManager('./src/Json/productos.json');
 
 productManager.iniciar()
   .then(() => {
@@ -12,6 +13,9 @@ productManager.iniciar()
   });
 async function getAllProducts(req, res) {
   const products = await productManager.getProductos();
+  if (typeof result == 'string'){
+    const error = result.split('')
+  }
   res.json(products);
 }
 
@@ -24,6 +28,8 @@ async function getProductById(req, res) {
 async function addProduct(req, res) {
   const newProduct = req.body;
   const result = await productManager.addProducto(newProduct);
+  if (typeof result == 'string'){
+    const error = result.split('')}
   res.json({ message: result });
 }
 
