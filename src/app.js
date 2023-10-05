@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(session({
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://dacobetter:Corredor@cluster0.5bypjlt.mongodb.net/",
+    mongoUrl: "mongodb+srv://nicolas:corredor@productos.zgfkako.mongodb.net/",
     dbname: "sessions"
   }),
   secret: 'secret',
@@ -42,7 +42,7 @@ const io = socketIO(httpServer);
 
 (async () => {
   try {
-    await mongoose.connect("mongodb+srv://dacobetter:Corredor@cluster0.5bypjlt.mongodb.net/", {
+    await mongoose.connect("mongodb+srv://nicolas:corredor@productos.zgfkako.mongodb.net/", {
       dbName: "Productos",
       useNewUrlParser: true, 
       useUnifiedTopology: true,
@@ -59,3 +59,6 @@ io.on("connection", socket => {
     io.emit("updatedProducts", data);
   });
 });
+
+
+

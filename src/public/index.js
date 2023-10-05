@@ -68,3 +68,5 @@ deleteProduct = (id) => {
     .catch(err => alert(`Producto Eliminado`));
     window.location.reload()
 };
+
+

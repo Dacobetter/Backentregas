@@ -60,18 +60,3 @@ router.get('/realtimeProducts',privateRoutes, async (req, res) => {try {const pr
 }) 
 
 module.exports = router; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -12,5 +12,8 @@ router.get('/',  async (req, res) => {
   res.render('sessions/login');
 });
 
-module.exports = router;
+// router.get('/profile', publicRoutes, async (req, res) => {
+//   res.render('sessions/profile', req.session.user);
+// });
 
+module.exports = router;

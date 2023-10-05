@@ -18,7 +18,7 @@ router.post('/login', async (req,res) =>{
     if(!user) {
         return res.redirect("/")
     }
-    if(user.email === 'adminCoder@gmail.com' && user.password == 'admin123'){
+    if(user.email === 'adminCoder@coder.com' && user.password == 'adminCod3r123'){
         user.role = 'admin'
     }else {
         user.role = 'user'
@@ -37,6 +37,3 @@ req.session.destroy(err =>{
 })
 
 module.exports = router;
-
-
-

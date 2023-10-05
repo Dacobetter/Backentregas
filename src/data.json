@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Producto 1",
+    "description": "Descripción del Producto 1",
+    "price": 22.99,
+    "thumbnail": "imagen1.jpg",
+    "code": "P001",
+    "category": "Electrónica",
+    "stock": 15
+  },
+  {
+    "title": "Producto 2",
+    "description": "Descripción del Producto 2",
+    "price": 32.99,
+    "thumbnail": "imagen2.jpg",
+    "code": "P002",
+    "category": "Ropa",
+    "stock": 18
+  },
+  {
+    "title": "Producto 3",
+    "description": "Descripción del Producto 3",
+    "price": 12.99,
+    "thumbnail": "imagen3.jpg",
+    "code": "P003",
+    "category": "Hogar",
+    "stock": 10
+  }
+]
+    
