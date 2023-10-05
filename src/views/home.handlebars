@@ -1,28 +1,82 @@
 <h2>Productos</h2>
+<div action="/api/sessions/logout">
+    <h3>Usuario: {{user.first_name}} {{user.last_name}}</h3>
+    <p>Correo:{{user.email}}</p>
+    <p>role: {{user.role}}</p>
+  <a href="/">Cerrar</a>
+</div>
 <br>
+<hr />
+<div align="center">
+    {{#if paginateInfo.hasPrevPage}}
+        <a href="{{paginateInfo.prevLink}}"><button type="button" class="btn btn-info"> < </button></a>
+    {{/if}}
+    {{#each paginateInfo.totalPages}}
+        <a href="{{this.link}}">{{this.page}}</a>
+    {{/each}}
+    {{#if paginateInfo.hasNextPage}}
+        <a href="{{paginateInfo.nextLink}}"><button type="button" class="btn btn-info"> > </button> </a>
+    {{/if}}
+</div>
+<hr />
 
 <div>
-    <table>
+    <table class="table">
         <thead>
             <tr>
+                <td></td>
                 <td>Producto</td>
                 <td>Descripccion</td>
                 <td>precio</td>
                 <td>codigo</td>
-                <td>stock</td>
+                <td>Categoría</td>
+                <td>stock</td>+
+                
             </tr>
         </thead>
         <tbody>
+            
+            <h1>Carrito:{{cart}}</h1>
             {{#each products}}
             <tr>
+                <td><button class="btn btn-danger" onclick="agregarCarrito('{{../cart}}','{{this._id}}')" >Agregar al carrito</button></td>
                 <td>{{this.title}}</td>
                 <td>{{this.description}}</td>
                 <td>{{this.price}}</td>
                 <td>{{this.code}}</td>
-                <td>{{this.stock}}</td>
                 <td>{{this.category}}</td>
+                <td>{{this.stock}}</td>
+                
             </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
+<script >
+agregarCarrito = (cid, pid) => {
+    const body = {
+        product: pid,
+        quantify: 1
+    };
+
+    fetch(`/api/carts/${cid}/products/${pid}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert("Producto agregado al carrito");
+        } else {
+            alert("Error al agregar el producto al carrito");
+        }
+    })
+    .catch(error => {
+        console.error("Error al agregar el producto al carrito:", error);
+        alert("Error al agregar el producto al carrito");
+    });
+}
+</script>

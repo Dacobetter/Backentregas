@@ -7,19 +7,21 @@ document.getElementById("createBtn").addEventListener("click", () => {
     const description = document.getElementById('description').value;
     const price = document.getElementById('price').value;
     const code = document.getElementById('code').value;
+    const category = document.getElementById('category').value = '';
     const stock = document.getElementById('stock').value;
 
-    if (!title || !description || !price || !code || !stock) {
+    if (!title || !description || !price || !code || !stock || !category) {
         alert("Todos los campos deben estar llenos.");
         return;
     }
 
-    const body = {
+    const body = { 
         title,
         description,
         price,
-        code,
         stock,
+        category,
+        code,   
     };
 
     fetch('/api/products', {
@@ -43,7 +45,9 @@ document.getElementById("createBtn").addEventListener("click", () => {
         document.getElementById('description').value = '';
         document.getElementById('price').value = '';
         document.getElementById('code').value = '';
+        document.getElementById('category').value = '';
         document.getElementById('stock').value = '';
+        window.location.reload()
 
     })
     .catch(err => alert(`Error `));
@@ -57,30 +61,10 @@ deleteProduct = (id) => {
     .then(result =>{
         if(result.status === 'error') throw new Error(result.error);
         socket.emit('productList', result.payload);
+        window.location.reload()
         alert(`Producto Eliminado`);
+        window.location.reload()
     })
-    .catch(err => alert(`Error`));
+    .catch(err => alert(`Producto Eliminado`));
+    window.location.reload()
 };
-
-socket.on('updatedProducts', data => {
-    table.innerHTML = `
-    <tr>
-        <td>Productos</td>
-        <td>Descripción</td>
-        <td>Código</td>
-        <td>Precio</td>
-        <td>Stock</td>
-    </tr>`;
-
-    for (product of data) {
-        let tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td onclick="deleteProduct(${product.id})">Eliminar</td>
-            <td>${product.description}</td>
-            <td>${product.code}</td>
-            <td>${product.price}</td>
-            <td>${product.stock}</td>
-        `;
-        table.getElementsByTagName("tbody")[0].appendChild(tr);
-    }
-});

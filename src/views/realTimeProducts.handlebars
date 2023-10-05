@@ -1,30 +1,35 @@
 <h1>Edite</h1>
-<form id="formulario"> 
- <div>Titulo <input type="text" name="" id="title"></div>
- <div>Descripccion<input type="text" name="" id="description"></div>
- <div>Precio<input type="number" name="" id="price"></div>
- <div>Codigo<input type="text" name="" id="code"></div>
- <div>Stock<input type="number" name="" id="stock"></div>
+<form id="formulario" > 
+ <div>Titulo <input class="form-control" type="text" name="" id="title"></div>
+ <div>Descripccion<input  class="form-control" type="text" name="" id="description"></div>
+ <div>Precio<input  class="form-control" type="number" name="" id="price"></div>
+ <div>Codigo<input   class="form-control"type="text" name="" id="code"></div>
+ <div>Codigo<input   class="form-control"type="text" name="" id="category"></div>
+ <div>Stock<input  class="form-control" type="number" name="" id="stock"></div>
 </form>
-<button id="createBtn">Crear Nuevo Producto</button>
-<table id="realProductsTable">
+<button type="button" class="btn btn-success"  id="createBtn">Crear Nuevo Producto</button>
+<table id="realProductsTable" class="table">
 <thead>
     <tr>
-        <td>Producto</td>
-        <td>Descripccion</td>
-        <td>Precio</td>
-        <td>Codigo</td>
-        <td>Stock</td>
+        <th>#</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Descripccion</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">categoria</th>
+        <th scope="col">Stock</th>
     </tr>
 </thead>
-<tbody>
+<tbody class="table-group-divider">
     {{#each products}}
     <tr>
-        <td><button class="" onclick="deleteProduct({{this.id}})">Eliminar</button></td>
+        <td><button class="btn btn-danger" onclick="agregarCarrito('{{../cart}}','{{this._id}}')" >Agregar al carrito</button></td>
+        <td><button class="btn btn-danger" onclick="deleteProduct('{{this._id}}')">Eliminar</button></td>
         <td>{{this.title}}</td>
         <td>{{this.description}}</td>
         <td>{{this.price}}</td>
         <td>{{this.code}}</td>
+        <td>{{this.categoria}}</td>
         <td>{{this.stock}}</td>
     </tr>
     {{/each}}
