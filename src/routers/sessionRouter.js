@@ -18,7 +18,7 @@ router.post('/login', async (req,res) =>{
     if(!user) {
         return res.redirect("/")
     }
-    if(user.email === 'adminCoder@coder.com' && user.password == 'adminCod3r123'){
+    if(user.email === 'admin@admin.com' && user.password == 'admin'){
         user.role = 'admin'
     }else {
         user.role = 'user'

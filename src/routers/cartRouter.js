@@ -1,7 +1,7 @@
 const  {Router}  = require('express')
 const cartModel = require("../models/cartModel")
-const baseModel = require("../models/basemModel");
-const productModel = require('../models/basemModel');
+const producto = require("../models/products");
+const productModel = require('../models/products');
 
 
 let products = [];
@@ -56,7 +56,7 @@ router.get("/:cid", async (req, res) => {
       if (!cart) {
         return res.status(404).json({ status: "error", error: `Usuario con id=${cid} no existe` });
       }
-      const productToAdd = await baseModel.findById(pid);
+      const productToAdd = await producto.findById(pid);
   
       if (!productToAdd) {
         return res.status(404).json({ status: "error", error: `Producto con id=${pid} no existe` });
@@ -95,7 +95,7 @@ router.get("/:cid", async (req, res) => {
       const productToEliminar = cart.products.findIndex((product) => product.productId.toString() === pid);
       if (productToEliminar !== -1) {
         const removedProduct = cart.products.splice(productToEliminar, 1)[0];
-        const productToUpdate = await baseModel.findById(removedProduct.productId);
+        const productToUpdate = await producto.findById(removedProduct.productId);
         if(productToUpdate){
             productToUpdate.stock += 1
             await productToUpdate.save()
@@ -138,7 +138,7 @@ router.put("/:cid", async (req, res) => {
         return res.status(400).json({ status: "error", error: "La cantidad debe ser un número válido mayor que cero" });
       }
 
-      const addProduct = await baseModel.findById(productInfo.product);
+      const addProduct = await producto.findById(productInfo.product);
 
       if (!addProduct) {
         return res.status(400).json({ status: "error", error: `Producto con id ${productInfo.product} no existe` });

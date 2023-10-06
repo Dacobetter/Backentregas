@@ -1,9 +1,9 @@
 const  {Router}  = require('express')
-const baseModel = require("../models/basemModel")
+const product = require("../models/products")
 const cartModel = require('../models/cartModel')
 const router = Router()
-const {getProducts} = require('../public/constroladorProduct')
-const{ privateRoutes} = require("../public/auth.middleware")
+const {getProducts} = require('../controllers/controladorProduct')
+const{ privateRoutes} = require("../middleware/auth.middleware")
 
 
 
@@ -48,7 +48,7 @@ router.get('/', privateRoutes,  async (req, res) => {
 }
 })
 
-router.get('/realtimeProducts',privateRoutes, async (req, res) => {try {const products = await baseModel.find().lean().exec()
+router.get('/realtimeProducts',privateRoutes, async (req, res) => {try {const products = await product.find().lean().exec()
     const carro = new cartModel({ products: []})
     const saveCart = await carro.save()
     const cart = saveCart._id

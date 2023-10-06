@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(session({
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://nicolas:corredor@productos.zgfkako.mongodb.net/",
+    mongoUrl: "mongodb+srv://nicolas:Corredor@productos.zgfkako.mongodb.net/",
     dbname: "sessions"
   }),
   secret: 'secret',
@@ -42,8 +42,8 @@ const io = socketIO(httpServer);
 
 (async () => {
   try {
-    await mongoose.connect("mongodb+srv://nicolas:corredor@productos.zgfkako.mongodb.net/", {
-      dbName: "Productos",
+    await mongoose.connect("mongodb+srv://nicolas:Corredor@productos.zgfkako.mongodb.net/", {
+      dbName: "ECCOOMER",
       useNewUrlParser: true, 
       useUnifiedTopology: true,
     });

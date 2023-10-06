@@ -1,7 +1,7 @@
 const  {Router}  = require('express')
-const baseModel = require("../models/basemModel")
+const product = require("../models/products")
 const cartModel = require("../models/cartModel")
-const {getProducts} = require('../public/constroladorProduct')
+const {getProducts} = require('../controllers/controladorProduct')
 
 const router = Router()
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 router.get("/:pid", async (req, res) => {
     const pid = req.params.pid
     try{
-        const producto = await baseModel.findById(pid)
+        const producto = await product.findById(pid)
         if(producto === null){
             return res.status(404).json({ status: "error", error: `Producti con id =${pid} no existe`})
         }return res.status(200).json({status: "success", data: producto})
@@ -27,7 +27,7 @@ router.get("/:pid", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const { title, description, price, code, stock, category  } = req.body;
-        const nuevoProducto = new baseModel({
+        const nuevoProducto = new product({
             title: title,
         description: description,
         price: price,
@@ -44,11 +44,11 @@ router.post("/", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
     const pid = req.params.pid;
     try {
-        const productoBorrar = await baseModel.findById(pid);
+        const productoBorrar = await product.findById(pid);
         if (productoBorrar === null) {
             return res.status(404).json({ status: "error", error: `Producto con id = ${pid} no existe` });
         } else {
-            await baseModel.deleteMany({_id: pid}); 
+            await product.deleteMany({_id: pid}); 
             res.status(204).json(); 
         }
     } catch (error) {
