@@ -12,7 +12,8 @@ const sessiomViewsRouter = require("./routers/sessiomViewsRouter")
 const session = require('express-session');
 const sessionRouter = require("./routers/sessionRouter")
 const app = express();
-
+const passport = require('passport')
+const initializePassport = require('./config/passportConfigjs')
 app.use(express.json());
 app.use(session({
   store: MongoStore.create({
@@ -23,6 +24,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('./src/public'));
 app.engine('handlebars', handlebars.engine());

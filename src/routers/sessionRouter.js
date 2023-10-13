@@ -1,31 +1,33 @@
 const {Router} = require("express")
 const UserModel = require("../models/user.model")
+const { createHash, isValidPassword } = require("../controladores/utils")
+const passport = require("passport")
 
 
 const router = Router()
 
-
-router.post('/register', async(req, res) => {
-    const userToRegister = req.body
-    const user = new UserModel(userToRegister)
-    await user.save()
+router.get('/register', async(req, res) => {
+    res.redirect("sessions/register")
+})
+router.post('/register', passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}), async (req, res) => {
     res.redirect("/")
 })
-
-router.post('/login', async (req,res) =>{
-    const {email, password} = req.body
-    const user = await UserModel.findOne({email,password}).lean().exec()
-    if(!user) {
-        return res.redirect("/")
-    }
-    if(user.email === 'admin@admin.com' && user.password == 'admin'){
-        user.role = 'admin'
-    }else {
-        user.role = 'user'
-    }
-    req.session.user = user
+router.get('login', (req,res) =>{
+    res.render('sessions/login')
+})
+router.post('/login', passport.authenticate('login', {failureRedirect: '/sessions/failLogin'}), async (req, res) => {
+   if (!req.user){
+    return res.status(400).send({status: 'error', error: 'Credenciales Invalidas'})
+   }
+   req.session.user = {
+    first_name: req.user.first_name,
+    last_name: req.user.last_name,
+    email: req.user.email,
+    age: req.user.age,
+   }
     res.redirect('/products')
 })
+router.get('/failLogin', (req, res) => res.send({ error: "Passport Login Failed"}))
 
 router.get('/logout', (req,res) =>{
 req.session.destroy(err =>{
@@ -35,5 +37,13 @@ req.session.destroy(err =>{
 }
     )
 })
+
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
+    
+});
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), async(req,res) =>{
+    req.session.user = req.user
+    res.redirect('/products')
+   })
 
 module.exports = router;
