@@ -8,12 +8,12 @@ const viewsCart = require('./routers/viewsCart')
 const cartRouter = require("./routers/cartRouter")
 const productRouter = require("./routers/productRouter")
 const MongoStore = require("connect-mongo")
-const sessiomViewsRouter = require("./routers/sessiomViewsRouter")
+const sessiomViewsRouter = require("./routers/sessionViewsRouter")
 const session = require('express-session');
 const sessionRouter = require("./routers/sessionRouter")
 const app = express();
 const passport = require('passport')
-const initializePassport = require('./config/passportConfigjs')
+const initializePassport = require('./config/passportConfig')
 app.use(express.json());
 app.use(session({
   store: MongoStore.create({

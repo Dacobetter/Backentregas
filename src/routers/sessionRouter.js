@@ -1,6 +1,6 @@
 const {Router} = require("express")
 const UserModel = require("../models/user.model")
-const { createHash, isValidPassword } = require("../controladores/utils")
+const { createHash, isValidPassword } = require("../controllers/utils")
 const passport = require("passport")
 
 
@@ -15,7 +15,7 @@ router.post('/register', passport.authenticate('register', {failureRedirect: '/s
 router.get('login', (req,res) =>{
     res.render('sessions/login')
 })
-router.post('/login', passport.authenticate('login', {failureRedirect: '/sessions/failLogin'}), async (req, res) => {
+router.post('/login', passport.authenticate('login', {failureRedirect: '/api/sessions/failLogin'}), async (req, res) => {
    if (!req.user){
     return res.status(400).send({status: 'error', error: 'Credenciales Invalidas'})
    }

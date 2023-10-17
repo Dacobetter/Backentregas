@@ -1,6 +1,6 @@
 const passport = require("passport")
 const local = require("passport-local")
-const { createHash, isValidPassword } = require("../controladores/utils.js")
+const { createHash, isValidPassword } = require("../controllers/utils")
 const UserModel = require("../models/user.model.js")
 const GitHubStrategy = require('passport-github2')
 const localStrategy = local.Strategy
@@ -43,8 +43,8 @@ passport.use('login', new localStrategy({
     }
 }))
 passport.use('github', new GitHubStrategy({
-    clientID: 'Iv1.4f822ce5bbef0583',
-    clientSecret: 'a2b5e89373b06df83d95e582541a149bb3221e7b',
+    clientID: 'd00f1426e5825a3a9de6',
+    clientSecret: '7120af51db1b83f270aceaf91f3aefcde3705846',
     callbackURL: 'http://localhost:8080/api/sessions/githubcallback'
 }, async(accessToken, refreshToken, profile, done) =>{
     try{
