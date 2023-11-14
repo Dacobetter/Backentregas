@@ -3,8 +3,13 @@
     <h3>Usuario: {{user.first_name}} {{user.last_name}}</h3>
     <p>Correo:{{user.email}}</p>
     <p>role: {{user.role}}</p>
-  <a href="/">Cerrar</a>
+    <p>carrito: {{user.cart}}</p>
+  <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/152/152534.png" alt="" style="height: 30px;"></a> 
+  <br>
+  <a href="/current"><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="height: 30px;"></a>
 </div>
+
+
 <br>
 <hr />
 <div align="center">
@@ -39,7 +44,7 @@
             <h1>Carrito:{{cart}}</h1>
             {{#each products}}
             <tr>
-                <td><button class="btn btn-danger" onclick="agregarCarrito('{{../cart}}','{{this._id}}')" >Agregar al carrito</button></td>
+                <td><button class="btn btn-danger" onclick="agregarCarrito('{{../user.cart}}','{{this._id}}')" >Agregar al carrito</button></td>
                 <td>{{this.title}}</td>
                 <td>{{this.description}}</td>
                 <td>{{this.price}}</td>
@@ -58,7 +63,6 @@ agregarCarrito = (cid, pid) => {
         product: pid,
         quantify: 1
     };
-
     fetch(`/api/carts/${cid}/products/${pid}`, {
         method: "POST",
         headers: {
@@ -71,12 +75,13 @@ agregarCarrito = (cid, pid) => {
         if (data.status === 'success') {
             alert("Producto agregado al carrito");
         } else {
-            alert("Error al agregar el producto al carrito");
+            console.log(data)
+            alert("Error al agregar el producto al carrito2");
         }
     })
     .catch(error => {
-        console.error("Error al agregar el producto al carrito:", error);
-        alert("Error al agregar el producto al carrito");
+        console.error("Error al agregar el producto al carrito1:", error);
+        alert("Error al agregar el producto al carrito1");
     });
 }
 </script>

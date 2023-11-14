@@ -1,49 +1,24 @@
 const {Router} = require("express")
-const UserModel = require("../models/user.model")
-const { createHash, isValidPassword } = require("../controllers/utils")
 const passport = require("passport")
-
-
+const controladorSession = require("../controllers/controladorSession")
 const router = Router()
 
-router.get('/register', async(req, res) => {
-    res.redirect("sessions/register")
-})
-router.post('/register', passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}), async (req, res) => {
-    res.redirect("/")
-})
-router.get('login', (req,res) =>{
-    res.render('sessions/login')
-})
-router.post('/login', passport.authenticate('login', {failureRedirect: '/api/sessions/failLogin'}), async (req, res) => {
-   if (!req.user){
-    return res.status(400).send({status: 'error', error: 'Credenciales Invalidas'})
-   }
-   req.session.user = {
-    first_name: req.user.first_name,
-    last_name: req.user.last_name,
-    email: req.user.email,
-    age: req.user.age,
-   }
-    res.redirect('/products')
-})
+router.get('/register', controladorSession.getRegister )
+
+router.post('/register', passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}), controladorSession.postRegister)
+
+router.get('login',controladorSession.getLogin )
+
+router.post('/login', passport.authenticate('login', { failureRedirect: '/api/sessions/failLogin' }), controladorSession.postLogin);
+
 router.get('/failLogin', (req, res) => res.send({ error: "Passport Login Failed"}))
 
-router.get('/logout', (req,res) =>{
-req.session.destroy(err =>{
-    if(err){
-      res.status(500).render('errors/base', {error:err})  
-    }else res.redirect('/')
-}
-    )
-})
+router.get('/logout', controladorSession.getLogout)
 
-router.get('/github', passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
-    
+router.get('/current', controladorSession.getCurrent)
+
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), (req, res) => {    
 });
-router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), async(req,res) =>{
-    req.session.user = req.user
-    res.redirect('/products')
-   })
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), controladorSession.getGitHubCallback)
 
 module.exports = router;

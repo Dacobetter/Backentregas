@@ -14,16 +14,19 @@ const sessionRouter = require("./routers/sessionRouter")
 const app = express();
 const passport = require('passport')
 const initializePassport = require('./config/passportConfig')
+const config = require('./config/config')
 app.use(express.json());
 app.use(session({
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://nicolas:Corredor@productos.zgfkako.mongodb.net/",
+    mongoUrl: config.mongo.uri,
     dbname: "sessions"
   }),
   secret: 'secret',
   resave: true,
   saveUninitialized: true
 }))
+
+
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
@@ -47,8 +50,8 @@ const io = socketIO(httpServer);
 
 (async () => {
   try {
-    await mongoose.connect("mongodb+srv://nicolas:Corredor@productos.zgfkako.mongodb.net/", {
-      dbName: "ECCOOMER",
+    await mongoose.connect(config.mongo.uri, {
+      dbName: config.mongo.dbName,
       useNewUrlParser: true, 
       useUnifiedTopology: true,
     });
@@ -64,6 +67,3 @@ io.on("connection", socket => {
     io.emit("updatedProducts", data);
   });
 });
-
-
-
